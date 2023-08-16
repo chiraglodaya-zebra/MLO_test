@@ -54,7 +54,7 @@
 					"model_selection": false,
 					"return_holdout": false,
 					"date_col": "d_id",
-					"endog_col": "QUANTITY",
+					"endog_col": "ATD_V2",
 					"seasonal_periods": 12,
 					"in_sample": false,
 					"exclude_nulls_for_accuracy": false,
