@@ -14,8 +14,10 @@ optimiser:
     
 hydra:
     mode: MULTIRUN
+    sweep:
+      dir: /dbfs/FileStore/MLO_Test_Temp/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+      subdir: ${hydra.job.num}
     sweeper:
         params:
           +n: 5,10
-    dir: /databricks/driver/multirun_driver/${now:%Y-%m-%d}/${now:%H-%M-%S}
-    subdir: ${hydra.job.num}
+    
