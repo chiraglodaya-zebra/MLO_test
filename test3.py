@@ -4,7 +4,7 @@ from hydra import utils
 from pathlib import Path
 import os
 os.environ["GIT_PYTHON_REFRESH"] = "quiet"
-import yaml
+
 
 @hydra.main(config_path="conf", config_name='config_test2.yaml')
 def main(cfg):

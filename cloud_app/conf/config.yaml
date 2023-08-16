@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - db: sqlite
+  - cloud_provider: local
+  - environment: testing
+
+hydra:
+  sweeper:
+    params:
+      db: sqlite, mysql
+  mode: MULTIRUN

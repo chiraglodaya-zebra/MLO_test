@@ -9,8 +9,7 @@ hydra:
   sweeper:
     _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
     max_batch_size: null
-    params:
-      +n: 5,10
+    params: null
   help:
     app_name: ${hydra.job.name}
     header: '${hydra.help.app_name} is powered by Hydra.
@@ -105,21 +104,21 @@ hydra:
       - file
     disable_existing_loggers: false
   env: {}
-  mode: MULTIRUN
+  mode: RUN
   searchpath: []
   callbacks: {}
   output_subdir: .hydra
   overrides:
-    hydra: []
-    task:
-    - +n=5
+    hydra:
+    - hydra.mode=RUN
+    task: []
   job:
-    name: test3
+    name: test5
     chdir: null
-    override_dirname: +n=5
-    id: '0'
-    num: 0
-    config_name: config_test2.yaml
+    override_dirname: ''
+    id: ???
+    num: ???
+    config_name: config_test.yaml
     env_set: {}
     env_copy: []
     config:
@@ -141,7 +140,7 @@ hydra:
     - path: ''
       schema: structured
       provider: schema
-    output_dir: C:\Users\cl5495\Desktop\ML_Ops_Exp\MLO_test\multirun\2023-08-10\15-40-20\0
+    output_dir: C:\Users\cl5495\Desktop\ML_Ops_Exp\MLO_test\outputs\2023-08-14\14-13-48
     choices:
       hydra/env: default
       hydra/callbacks: null
