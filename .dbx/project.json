@@ -1,0 +1,15 @@
+{
+    "environments": {
+        "EXP1": {
+            "profile": "DEFAULT",
+            "storage_type": "mlflow",
+            "properties": {
+                "workspace_directory": "/Workspace/Repos/chirag.lodaya@zebra.com/MLO_test",
+                "artifact_location": "dbfs:/dbx/MLO_test"
+            }
+        }
+    },
+    "inplace_jinja_support": false,
+    "failsafe_cluster_reuse_with_assets": false,
+    "context_based_upload_for_execute": false
+}

@@ -1,0 +1,19 @@
+experiment_name:
+  "10-08-2023_t2"
+
+network:
+    inputs: 2
+    outputs: 3
+    layer_size: 60
+    nr_layers: 8
+
+optimiser:
+    lr: 1e-3
+    scheduler: exponential_lr
+    iter: 5000
+    
+hydra:
+    mode: MULTIRUN
+    sweeper:
+        params:
+          +n: 5,10
