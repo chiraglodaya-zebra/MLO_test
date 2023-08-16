@@ -1,0 +1,75 @@
+{
+	"DFP": {
+		"stages": [
+			{
+				"module_class": "antuit.dfp.io.LoadingSparkDataframe",
+				"params": {
+					"input_name": "{input_df_path}",
+					"file_type": "parquet",
+					"load_attrDict": false
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.DfDictUpdate",
+				"params": {
+					"in_df_name": "sellin_df",
+					"out_df_name": "sellin_df",
+					"mode": "append"
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.FillNa",
+				"params": {
+					"value_cols": [
+					"ATD_V2"
+					],
+					"fill_value": 0
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.DfDictUpdate",
+				"params": {
+					"in_df_name": "sellin_df",
+					"out_df_name": "sellin_df",
+					"mode": "append"
+				}
+			},
+			
+			{
+				"module_class": "antuit.dfp.ts_model_selection.TimeSeriesModels",
+				"params": {
+					"model_dict": {			
+                        "default": {
+							"window": 3,
+							"type": "MEAN"
+						}
+					},
+					"number_holdouts": 0,
+					"forecast_horizon": "list(range(0,4+1))",
+					"model_selection_horizon": "list(range(0,1))",
+					"forecast_creation_date":"{forecast_creation_date}",
+					"forecast_cr_dt_col": "frcs_cr_dt",
+					"partition_cols": ["12nc"],
+					"forecast_column": "frcs",
+					"model_selection": false,
+					"return_holdout": false,
+					"date_col": "d_id",
+					"endog_col": "QUANTITY",
+					"seasonal_periods": 12,
+					"in_sample": false,
+					"exclude_nulls_for_accuracy": false,
+					"model_path": "{long_ts_model_path}"
+				}
+			},
+			{
+				"module_class": "antuit.dfp.io.StoringSparkDataframe",
+				"params": {
+					"output_name": "{forecast_out_time_series}",
+					"file_type": "parquet",
+					"mode": "overwrite",
+					"store_attrDict": true
+				}
+			}
+			]
+	}
+}
