@@ -23,6 +23,7 @@ def my_app(cfg : DictConfig) -> None:
     creation_did = cfg.creation_did
     window_size = int(cfg.window_size)
     runtime_oppath = HydraConfig.get().runtime.output_dir
+    runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
     print(creation_did)
     print(window_size)
 
@@ -32,7 +33,7 @@ def my_app(cfg : DictConfig) -> None:
     # change the input path before executing
 
     input_df_path = f'{base_path}/Input_data/Model_Table_ForecastCreation_July23.parquet'
-    forecast_out_time_series = f'{base_path}/Output_data2/TS_Output_{creation_did}.parquet'
+    forecast_out_time_series = f'{runtime_oppath}/Output_data/TS_Output.parquet'
     ts_model_path = f'{runtime_oppath}/Output_data/model'
 
     git_root = '/Workspace/Repos/chirag.lodaya@zebra.com/MLO_test'
