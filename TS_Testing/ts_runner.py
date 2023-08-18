@@ -17,6 +17,7 @@ import datetime as dt
 
 #######################
 creation_did = 49
+window_size = 3
 print(creation_did)
 
 base_path = "dbfs:/FileStore/MLO_Test_Temp"
@@ -26,14 +27,18 @@ base_path = "dbfs:/FileStore/MLO_Test_Temp"
 
 input_df_path = f'{base_path}/Input_data/Model_Table_ForecastCreation_July23.parquet'
 forecast_out_time_series = f'{base_path}/Output_data/TS_Output_{creation_did}.parquet'
+ts_model_path = f'{base_path}/Output_data/model'
+
 git_root = '/Workspace/Repos/chirag.lodaya@zebra.com/MLO_test'
 print(input_df_path)
 print(forecast_out_time_series)
 
 format_params = {
     "input_df_path":input_df_path,
-    "forecast_out_time_series": forecast_out_time_series,
+    "forecast_out_time_series": forecast_out_time_series, 
+    "ts_model_path": ts_model_path,
     "creation_did" : creation_did,
+    "window_size": window_size,
     "git_root": git_root,
     "base_path": base_path
         }
@@ -52,7 +57,7 @@ if True:
 
     # Load stages
     job_json = json_name
-    # print(base_job_json, key)
+    print(job_json)
     print(f"Running job_json: {job_json}")
     stages = ai_core.tools.load_stages(f"{job_json}", format_params, sequence='DFP')
 

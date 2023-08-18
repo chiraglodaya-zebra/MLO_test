@@ -1,0 +1,14 @@
+hydra:
+    mode: MULTIRUN
+    sweep:
+      dir: /dbfs/FileStore/MLO_Test_Temp/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+      subdir: ${hydra.job.override_dirname}/window_size=${window_size}
+    sweeper:
+        params:
+          +window_size: 3,4,5
+    job:
+    config:
+      override_dirname:
+        exclude_keys:
+          - window_size
+

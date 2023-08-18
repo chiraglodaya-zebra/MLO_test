@@ -1,0 +1,7 @@
+{
+  "host": "https://adb-7399320007323229.9.azuredatabricks.net/",
+  "authType": "profile",
+  "profile": "MLO_TEST_ENV",
+  "clusterId": "0814-083407-rhd3sxjx",
+  "workspacePath": "/Users/chirag.lodaya@zebra.com/.ide/MLO_test-10315c68"
+}

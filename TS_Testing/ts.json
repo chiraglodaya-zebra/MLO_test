@@ -2,7 +2,7 @@
 	"DFP": {
 		"stages": [
 			{
-				"module_class": "antuit.dfp.io.LoadingSparkDataframe",
+				"module_class": "antuit.dfp.iom.LoadingSparkDataframe",
 				"params": {
 					"input_name": "{input_df_path}",
 					"file_type": "parquet",
@@ -40,14 +40,14 @@
 				"params": {
 					"model_dict": {			
                         "default": {
-							"window": 3,
+							"window": "{window_size}",
 							"type": "MEAN"
 						}
 					},
 					"number_holdouts": 0,
 					"forecast_horizon": "list(range(0,4+1))",
 					"model_selection_horizon": "list(range(0,1))",
-					"forecast_creation_date":"{forecast_creation_date}",
+					"forecast_creation_date":"{creation_did}",
 					"forecast_cr_dt_col": "frcs_cr_dt",
 					"partition_cols": ["12nc"],
 					"forecast_column": "frcs",
@@ -58,11 +58,11 @@
 					"seasonal_periods": 12,
 					"in_sample": false,
 					"exclude_nulls_for_accuracy": false,
-					"model_path": "{long_ts_model_path}"
+					"model_path": "{ts_model_path}"
 				}
 			},
 			{
-				"module_class": "antuit.dfp.io.StoringSparkDataframe",
+				"module_class": "antuit.dfp.iom.StoringSparkDataframe",
 				"params": {
 					"output_name": "{forecast_out_time_series}",
 					"file_type": "parquet",
