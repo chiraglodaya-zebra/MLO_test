@@ -2,10 +2,10 @@ hydra:
     mode: MULTIRUN
     sweep:
       dir: /dbfs/FileStore/MLO_Test_Temp/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
-      subdir: ${hydra.job.num}
+      subdir: ${hydra.job.override_dirname}
     sweeper:
         params:
-          +window_size: 3
-          +creation_did: 47
+          +window_size: 3,4
+          +creation_did: 47,48
 
     
