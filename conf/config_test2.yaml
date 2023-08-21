@@ -19,5 +19,5 @@ hydra:
       subdir: ${hydra.job.num}
     sweeper:
         params:
-          +n: 5,10
+          +n: 20,30
     

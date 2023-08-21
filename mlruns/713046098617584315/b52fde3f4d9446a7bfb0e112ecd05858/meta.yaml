@@ -1,0 +1,15 @@
+artifact_uri: file://C:\Users\cl5495\Desktop\ML_Ops_Exp\MLO_test/mlruns/713046098617584315/b52fde3f4d9446a7bfb0e112ecd05858/artifacts
+end_time: 1692613976856
+entry_point_name: ''
+experiment_id: '713046098617584315'
+lifecycle_stage: active
+run_id: b52fde3f4d9446a7bfb0e112ecd05858
+run_name: 10-08-2023_t2_b52fde3f4d9446a7bfb0e112ecd05858
+run_uuid: b52fde3f4d9446a7bfb0e112ecd05858
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1692613976688
+status: 3
+tags: []
+user_id: CL5495

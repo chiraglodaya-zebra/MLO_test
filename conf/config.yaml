@@ -1,14 +1,11 @@
+experiment_name: ${now:%Y-%m-%d}_now:%H:%M:%S
 hydra:
     mode: MULTIRUN
     sweep:
-      dir: /dbfs/FileStore/MLO_Test_Temp/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
-      subdir: ${hydra.job.override_dirname}/window_size=${window_size}
+      dir: C:/Users/cl5495/Desktop/ML_Ops_Exp/MLO_test/mlflow_op/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+      subdir: ${hydra.job.num}
     sweeper:
         params:
-          +window_size: 3,4,5
-    job:
-    config:
-      override_dirname:
-        exclude_keys:
-          - window_size
+          +window_size: 3,4
+          +creation_did: 47, 48 
 
