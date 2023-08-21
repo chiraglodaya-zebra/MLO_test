@@ -24,7 +24,7 @@ def my_app(cfg : DictConfig) -> None:
     creation_did = cfg.creation_did
     window_size = int(cfg.window_size)
     init_dir = HydraConfig.get().sweep.dir
-    init_dir = init_dir.replace("/dbfs","dbfs:")
+    # init_dir = init_dir.replace("/dbfs","dbfs:")
     runtime_oppath = HydraConfig.get().runtime.output_dir
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
     print(creation_did)
