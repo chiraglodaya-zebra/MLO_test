@@ -1,4 +1,3 @@
-experiment_name: 21-08-23_t1
 hydra:
     mode: MULTIRUN
     sweep:

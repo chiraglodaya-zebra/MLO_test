@@ -23,6 +23,8 @@ def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
     creation_did = cfg.creation_did
     window_size = int(cfg.window_size)
+    init_dir = HydraConfig.get().sweep.dir
+    init_dir = init_dir.replace("/dbfs","dbfs:")
     runtime_oppath = HydraConfig.get().runtime.output_dir
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
     print(creation_did)
@@ -37,6 +39,7 @@ def my_app(cfg : DictConfig) -> None:
     forecast_out_time_series = f'{runtime_oppath}/Output_data/TS_Output.parquet'
     ts_model_path = f'{runtime_oppath}/Output_data/model'
 
+
     git_root = '/Workspace/Repos/chirag.lodaya@zebra.com/MLO_test'
     print(input_df_path)
     print(forecast_out_time_series)
@@ -48,18 +51,19 @@ def my_app(cfg : DictConfig) -> None:
         "creation_did" : creation_did,
         "window_size": window_size,
         "runtime_oppath": runtime_oppath,
+        "init_dir": init_dir,
         "git_root": git_root,
         "base_path": base_path
             }
 
     #############################################################################################
     try:
-        experiment_id = mlflow.create_experiment(cfg.experiment_name)
-        mlflow.set_experiment(cfg.experiment_name)
+        experiment_id = mlflow.create_experiment(init_dir)
+        mlflow.set_experiment(init_dir)
         print('===============')
         print('Try block')
     except:
-        mlflow.set_experiment(cfg.experiment_name)
+        mlflow.set_experiment(init_dir)
         print('===============')
         print('except block')
 
