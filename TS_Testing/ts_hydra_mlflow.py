@@ -68,7 +68,7 @@ def my_app(cfg : DictConfig) -> None:
         print('except block')
 
     with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
-        mlflow.log_artifacts(cfg)
+        mlflow.log_params(cfg)
         mlflow.log_param("Output_Parquet_Path",forecast_out_time_series)
         mlflow.end_run()
 
