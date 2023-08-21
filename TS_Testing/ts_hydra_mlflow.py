@@ -23,7 +23,7 @@ def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
     creation_did = cfg.creation_did
     window_size = int(cfg.window_size)
-    init_dir = "Users/chirag.lodaya@zebra.com/experiment_1"
+    init_dir = "/Users/chirag.lodaya@zebra.com/experiment_1"
     # init_dir = init_dir.replace("/dbfs","dbfs:")
     runtime_oppath = HydraConfig.get().runtime.output_dir
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
