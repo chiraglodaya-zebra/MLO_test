@@ -1,0 +1,11 @@
+hydra:
+    mode: MULTIRUN
+    sweep:
+      dir: /dbfs/FileStore/MLO_Test_Temp/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+      subdir: ${hydra.job.override_dirname}
+    sweeper:
+        params:
+          +batch_size: 64,128
+          +creation_did: 47,48
+
+    

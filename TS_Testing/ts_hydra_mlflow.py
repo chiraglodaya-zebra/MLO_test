@@ -23,8 +23,8 @@ def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
     creation_did = cfg.creation_did
     window_size = int(cfg.window_size)
-    init_dir = HydraConfig.get().sweep.dir
-    init_dir = init_dir.replace("/dbfs","dbfs:")
+    init_dir = "/Users/chirag.lodaya@zebra.com/experiment_1"
+    # init_dir = init_dir.replace("/dbfs","dbfs:")
     runtime_oppath = HydraConfig.get().runtime.output_dir
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
     print(creation_did)
@@ -68,7 +68,7 @@ def my_app(cfg : DictConfig) -> None:
         print('except block')
 
     with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
-        mlflow.log_artifacts(cfg)
+        mlflow.log_params(cfg)
         mlflow.log_param("Output_Parquet_Path",forecast_out_time_series)
         mlflow.end_run()
 

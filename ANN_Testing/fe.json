@@ -1,0 +1,222 @@
+{
+	"DFP": {
+		"stages": [
+			{
+				"module_class": "antuit.dfp.io.LoadingSparkDataframe",
+				"params": {
+					"input_name": "{input_df_path}",
+					"file_type": "parquet",
+					"load_attrDict": false
+				}
+			},
+
+			{
+				"module_class": "antuit.dfp.fe.FillNa",
+				"params": {
+					"value_cols": [
+					"ATD_V2"
+					],
+					"fill_value": 0
+				}
+			},	
+
+			{
+				"module_class": "antuit.dfp.fe.DfDictUpdate",
+				"params": {
+					"in_df_name": "sales_df",
+					"out_df_name": "sales_df",
+					"mode": "append"
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.ParamIndexing",
+				"params": {
+					"input_cols":[
+						"month",
+						"12nc", 
+						"Business_Unit_Desc",
+						"feature_type",
+						"Prime_flag",
+						"MAG_Desc",
+						"AG_Desc",
+						"BG_Desc"
+					],
+										
+					"output_postfix": "_cat"
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.FeatureNormFitTransform",
+				"params": {
+					"input_cols": [
+						"ATD_V2",
+						"SO",
+						"Average_Discount_Percent",
+						"Lag5_Sales",
+						"Lag6_Sales",
+						"Lag7_Sales",
+						"Lag8_Sales",
+						"Lag9_Sales",
+						"Lag10_Sales",
+						"Lag11_Sales",
+						"Lag12_Sales"
+					],
+
+					"output_postfix": "_nm",
+					"nzm": [
+						false,
+					    false,
+						false,
+						false,
+						false,
+						false,
+					    false,
+						false,
+						false,
+						false,
+						false
+					],
+					"date_col": "d_id",
+					"forecast_creation_date": "{creation_did}",
+					"full_refresh": true
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.InitNullCount",
+				"params": {
+					"partition_cols": [
+						"12nc"
+
+					],
+					"date_col": "d_id",
+					"output_col": "null_count",
+					"max_lag": 20
+				}
+			},
+
+			{
+				"module_class": "antuit.dfp.fe.TimeWindowing",
+				"params": {
+					"partition_cols": [
+						"12nc"
+					],
+					"order_cols": [
+						"d_id"
+					],
+					"input_cols": [
+						"ATD_V2_nm",
+						"Average_Discount_Percent_nm",
+						"month_cat",
+						"Prime_flag",
+						"Lag5_Sales_nm",
+						"Lag6_Sales_nm",
+						"Lag7_Sales_nm",
+						"Lag8_Sales_nm",
+						"Lag9_Sales_nm",
+						"Lag10_Sales_nm",
+						"Lag11_Sales_nm",
+						"Lag12_Sales_nm"
+					],
+					"output_postfix": "_lags",
+					"shift_list": "list(range(-5,0))"
+				}
+			},
+			
+			{
+				"module_class": "antuit.dfp.fe.TimeWindowing",
+				"params": {
+					"partition_cols": [
+						"12nc"	
+					],
+					"order_cols": [
+						"d_id"
+					],
+					"input_cols": [
+						"ATD_V2_nm",
+						"SO_nm",
+						"Average_Discount_Percent_nm",
+						"Prime_flag_cat",
+						"month_cat",
+						"Lag5_Sales_nm",
+						"Lag6_Sales_nm",
+						"Lag7_Sales_nm",
+						"Lag8_Sales_nm",
+						"Lag9_Sales_nm",
+						"Lag10_Sales_nm",
+						"Lag11_Sales_nm",
+						"Lag12_Sales_nm",
+						"feature_type_cat"	
+					],
+					"output_postfix": "_leads",
+					"shift_list": "list(range(0,4+1))"
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.DroppingInitLagNulls",
+				"params": {
+					"partition_cols": [
+						"12nc"
+					],
+					"date_col": "d_id",
+					"max_lag": 12
+				}
+			},
+			{
+				"module_class": "antuit.dfp.io.GroupModelSplit",
+				"params": {
+					"forecast_horizon": 4,
+					"n_test_period": 0,
+					"forecast_cr_dt": "{creation_did}",
+					"date_col": "d_id",
+					"period_len": 1,
+					"validation": true,
+					"df_name": {
+						"test": "test_df",
+						"predict": "predict_df",
+						"validation": "validation_df"
+					},
+					"n_partitions": 20,
+					"validation_ratio": 0.15,
+					"hash_seed_cols": [
+						"12nc"		
+					],
+					"hash_key": "hash_key",
+					"hash_key_int": "hash_key_int"
+				}
+			},
+			{
+				"module_class": "antuit.dfp.io.StoreSplitDatasets",
+				"params": {
+					"storing_format": {
+						"parquet": true,
+						"tfrecords": true
+					},
+					"output_datasets": {
+						"training": true,
+						"validation": true,
+						"testing": false,
+						"prediction": true,
+						"hp_train": false,
+						"hp_valid": false,
+						"hp_test": false
+					},
+					"dataset_path": "{model_data_path}",
+					"hp_optimization": false,
+					"return_df": "training",
+					"validation_ratio": 0.15,
+					"hp_subset_ratio": 0,
+					"df_name": {
+						"test": "test_df",
+						"predict": "predict_df",
+						"validation": "validation_df"
+					},
+					"n_partitions": 20,
+					"hash_seed_cols": [
+						"12nc"
+					],
+					"sorting_df": true
+				}
+			}
+		]
+	}
+}
