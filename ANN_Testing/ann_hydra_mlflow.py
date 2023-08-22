@@ -36,13 +36,13 @@ def my_app(cfg : DictConfig) -> None:
 
     input_df_path = f'{base_path}/Input_data/ANN_Model_Table_ForecastCreation_July23.parquet'
     
-    model_data_path = f'{runtime_oppath}/ANN_Output_data/fe'
+    model_data_path = f'{runtime_oppath}/ANN_Output_data/fe/'
     
-    dataset_path = f'{runtime_oppath}/ANN_Output_data/fe'
-    model_path = f'{runtime_oppath}/ANN_Output_data/model'
-    tensor_board_log_dir = f'{runtime_oppath}/ANN_Output_data/model/tensor_board_log_dir'
+    dataset_path = f'{runtime_oppath}/ANN_Output_data/fe/'
+    model_path = f'{runtime_oppath}/ANN_Output_data/model/'
+    tensor_board_log_dir = f'{runtime_oppath}/ANN_Output_data/model/tensor_board_log_dir/'
     
-    predict_model_path = f'{runtime_oppath}/ANN_Output_data/model'
+    predict_model_path = f'{runtime_oppath}/ANN_Output_data/model/'
     predict_input_path = f'{runtime_oppath}/ANN_Output_data/fe/prediction.parquet'
     forecast_out_time_ann = f'{runtime_oppath}/ANN_Output_data/predict/forecast_out.parquet'
     
