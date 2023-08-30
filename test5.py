@@ -1,6 +1,7 @@
 import mlflow
 import hydra
 from hydra import utils
+from hydra.core.hydra_config import HydraConfig
 import os
 os.environ["GIT_PYTHON_REFRESH"] = "quiet"
 from pathlib import Path
@@ -28,7 +29,7 @@ from omegaconf import DictConfig, OmegaConf
 
 @hydra.main(version_base= None, config_path="conf", config_name="config_test2.yaml",)
 def main(cfg : DictConfig) -> None:
-    print(cfg['n'])
+    print(HydraConfig.get().sweep.dir)
 
 
 if __name__ == '__main__':

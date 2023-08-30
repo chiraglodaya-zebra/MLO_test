@@ -2,7 +2,7 @@
 	"DFP": {
 		"stages": [
 			{
-				"module_class": "antuit.dfp.iom.LoadingSparkDataframe",
+				"module_class": "antuit.dfp.io.LoadingSparkDataframe",
 				"params": {
 					"input_name": "{input_df_path}",
 					"file_type": "parquet",
@@ -162,7 +162,16 @@
 				}
 			},
 			{
-				"module_class": "antuit.dfp.iom.GroupModelSplit",
+				"module_class": "antuit.dfp.io.StoringSparkDataframe",
+				"params": {
+					"output_name": "{fe_model_output}",
+					"file_type": "parquet",
+					"mode": "overwrite",
+					"store_attrDict": true
+				}
+			},
+			{
+				"module_class": "antuit.dfp.io.GroupModelSplit",
 				"params": {
 					"forecast_horizon": 4,
 					"n_test_period": 0,
@@ -185,7 +194,7 @@
 				}
 			},
 			{
-				"module_class": "antuit.dfp.iom.StoreSplitDatasets",
+				"module_class": "antuit.dfp.io.StoreSplitDatasets",
 				"params": {
 					"storing_format": {
 						"parquet": true,
