@@ -33,21 +33,27 @@ def my_app(cfg : DictConfig) -> None:
 
 
     # change the input path before executing
+    if cfg.fe.run_once == 1:
+        fe_model_output = f'{runtime_par_path}/fe/fe_model_output.parquet'
+        model_data_path = f'{runtime_par_path}/fe/'
+        dataset_path = f'{runtime_par_path}/fe/'
+        predict_input_path = f'{runtime_par_path}/fe/prediction.parquet'
+    
+    else:
+        fe_model_output = f'{runtime_oppath}/fe/fe_model_output.parquet'
+        model_data_path = f'{runtime_oppath}/fe/'
+        dataset_path = f'{runtime_oppath}/fe/'
+        predict_input_path = f'{runtime_oppath}/fe/prediction.parquet'
+
 
     input_df_path = f'{base_path}/ML_Ops_Exp/Input/ANN_Input.parquet'
 
 
-    fe_model_output = f'{runtime_par_path}/fe/fe_model_output.parquet'
-
-    model_data_path = f'{runtime_par_path}/fe/'
-
-    dataset_path = f'{runtime_par_path}/fe/'
 
     model_path = f'{runtime_oppath}/model/'
     tensor_board_log_dir =f'{runtime_oppath}/model/tensorboard_logs/'
 
     predict_model_path =f'{runtime_oppath}/model/'
-    predict_input_path = f'{runtime_par_path}/fe/prediction.parquet'
     forecast_path = f'{runtime_oppath}/predict/forecast_out.parquet'
 
     
@@ -79,10 +85,12 @@ def my_app(cfg : DictConfig) -> None:
     try:
         experiment_id = mlflow.create_experiment(init_dir)
         mlflow.set_experiment(init_dir)
+        torun_jsons = ['fe','model','predict']
         print('===============')
         print('Try block')
     except:
         mlflow.set_experiment(init_dir)
+        torun_jsons = ['model','predict']
         print('===============')
         print('except block')
 
@@ -92,8 +100,6 @@ def my_app(cfg : DictConfig) -> None:
         mlflow.end_run()
 
 
-    
-    torun_jsons = ['fe']
     for temp_json in torun_jsons:
         t0 = time.time()
         json_name = f"{git_root}/ANN_Testing/{temp_json}.json"

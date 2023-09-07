@@ -1,0 +1,15 @@
+defaults:
+  - yaml: config_def
+  - _self_
+
+hydra:
+    mode: MULTIRUN
+    sweep:
+      dir: /dbfs/FileStore/MLO_Test_Temp/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+      subdir: ${hydra.job.num}
+    sweeper:
+        params:
+          yaml: config_exp 
+    
+    
+    

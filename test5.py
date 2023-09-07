@@ -27,9 +27,11 @@ from pathlib import Path
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
-@hydra.main(version_base= None, config_path="conf", config_name="config_test2.yaml",)
+config_path = Path().cwd().joinpath("conf")
+
+@hydra.main(version_base= None, config_path=str(config_path), config_name="config_test2")
 def main(cfg : DictConfig) -> None:
-    print(HydraConfig.get().sweep.dir)
+    print(cfg)
 
 
 if __name__ == '__main__':

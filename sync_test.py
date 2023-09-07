@@ -1,1 +1,0 @@
-print('Sync test')
