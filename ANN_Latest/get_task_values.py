@@ -23,8 +23,9 @@ task_values = dbutils.jobs.taskValues.get(
                             taskKey = "T1",
                             key   = "task_values")
 
-print(task_values)
+
 task_values = task_values[1:len(task_values)-1]
+print(task_values)
 task_values_json = json.loads(task_values)
 
 print(task_values_json)
