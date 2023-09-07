@@ -5,6 +5,7 @@
 import os
 import sys
 import time
+import json
 
 
 # ---------------------------------------------------------------------------- #
@@ -21,5 +22,7 @@ args, unknown = parser.parse_known_args()
 task_values = dbutils.jobs.taskValues.get(
                             taskKey = "T1",
                             key   = "task_values")
+
+task_values = json.loads(task_values)
 
 print(task_values)
