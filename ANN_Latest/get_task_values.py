@@ -5,22 +5,21 @@
 import os
 import sys
 import time
-import datetime
+
+
 # ---------------------------------------------------------------------------- #
 #                                    PARAMS                                    #
 # ---------------------------------------------------------------------------- #
 
-
 import argparse
 
 parser = argparse.ArgumentParser(add_help=False)
-parser.add_argument("--task_values", type=str, required=True)
 
 args, unknown = parser.parse_known_args()
-task_values = dict(args.task_values)
-print("Task Values", "->", args.task_values)
 
 
+task_values = dbutils.jobs.taskValues.get(
+                            taskKey = "T1",
+                            key   = "task_values")
 
-dbutils.jobs.taskValues.set(key   = "task_values", \
-                            value = args.task_values)
+print(task_values)
