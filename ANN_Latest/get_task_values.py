@@ -43,4 +43,4 @@ task_name = all_tags.get('task')
 
 # Print the task name
 
-print("Task Name:", task_name)
+print(all_tags)
