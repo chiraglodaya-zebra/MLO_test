@@ -43,4 +43,4 @@ task_name = all_tags.get('task')
 
 # Print the task name
 
-print(all_tags)
+print(json.loads(spark.conf.get("spark.databricks.clusterUsageTags.clusterAllTags")))
