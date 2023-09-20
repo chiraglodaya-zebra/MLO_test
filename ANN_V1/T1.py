@@ -17,6 +17,10 @@ import mlflow
 
 
 run_type = 'Def'
+task_name= 'T1'
+ 
+
+
 
 @hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name="config")
 def my_app(cfg : DictConfig) -> None:
@@ -35,10 +39,11 @@ def my_app(cfg : DictConfig) -> None:
     
     runtime_oppath = HydraConfig.get().runtime.output_dir
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
+    op_dir = f"{task_name}/Output"
     
 
-    fe_model_output = f'{runtime_oppath}/fe/fe_model_output.parquet'
-    model_data_path = f'{runtime_oppath}/fe/'
+    fe_model_output = f'{runtime_oppath}/{op_dir}/fe/fe_model_output.parquet'
+    model_data_path = f'{runtime_oppath}/{op_dir}/fe/'
     # dataset_path = f'{runtime_oppath}/fe/'
     # predict_input_path = f'{runtime_oppath}/fe/prediction.parquet'
 
