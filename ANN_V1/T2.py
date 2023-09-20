@@ -16,30 +16,45 @@ import datetime as dt
 import mlflow
 
 
-run_type = 'Def'
+run_type = 'Exp'
 task_name= 'T2'
-prior_op = 'T1/Output/fe'
+config_name = 'config_T2'
+prev_dir = 'T1/Output/fe'
  
 
 
 
-@hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name="config")
+@hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name=config_name)
 def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
+    if run_type=='Def':
+        prior_op = prev_dir
+        total_runtime_oppath = HydraConfig.get().runtime.output_dir
+        total_runtime_oppath = total_runtime_oppath.replace("/dbfs","dbfs:")
+        par_runtime_oppath = total_runtime_oppath
+
+    else:
+        prior_op = f'{cfg.prev_sweep}/{prev_dir}'
+        total_runtime_oppath = HydraConfig.get().runtime.output_dir
+        total_runtime_oppath = total_runtime_oppath.replace("/dbfs","dbfs:")
+        par_runtime_oppath = HydraConfig.get().sweep.dir
+        par_runtime_oppath = par_runtime_oppath.replace("/dbfs","dbfs:")
+    
     batch_size = cfg.batch_size
     learning_rate = cfg.learning_rate
     creation_did = cfg.creation_did
 
     print(batch_size)
     print(learning_rate)
+    print(prior_op)
 
 
     mlflow_dir = "/Users/chirag.lodaya@zebra.com/experiment_ann_1"
     base_path = "dbfs:/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw"
     git_root = '/Workspace/Repos/chirag.lodaya@zebra.com/MLO_test'
     
-    runtime_oppath = HydraConfig.get().runtime.output_dir
-    runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
+
+    
     
     op_dir = f"{task_name}/Output"
     
@@ -47,8 +62,8 @@ def my_app(cfg : DictConfig) -> None:
     # fe_model_output = f'{runtime_oppath}/{op_dir}/fe/fe_model_output.parquet'
     # model_data_path = f'{runtime_oppath}/{op_dir}/fe/'
 
-    dataset_path = f'{runtime_oppath}/{prior_op}/'
-    predict_input_path = f'{runtime_oppath}/{prior_op}/prediction.parquet'
+    dataset_path = f'{par_runtime_oppath}/{prior_op}/'
+    predict_input_path = f'{par_runtime_oppath}/{prior_op}/prediction.parquet'
 
 
     # input_df_path = f'{base_path}/ML_Ops_Exp/Input/ANN_Input.parquet'
@@ -56,10 +71,10 @@ def my_app(cfg : DictConfig) -> None:
 
 
     # # model stuff
-    model_path = f'{runtime_oppath}/{op_dir}/model/'
-    tensor_board_log_dir =f'{runtime_oppath}/{op_dir}/model/tensorboard_logs/'
-    predict_model_path =f'{runtime_oppath}/{op_dir}/model/'
-    forecast_path = f'{runtime_oppath}/{op_dir}/predict/forecast_out.parquet'
+    model_path = f'{total_runtime_oppath}/{op_dir}/model/'
+    tensor_board_log_dir =f'{total_runtime_oppath}/{op_dir}/model/tensorboard_logs/'
+    predict_model_path =f'{total_runtime_oppath}/{op_dir}/model/'
+    forecast_path = f'{total_runtime_oppath}/{op_dir}/predict/forecast_out.parquet'
 
     
 
@@ -83,7 +98,8 @@ def my_app(cfg : DictConfig) -> None:
         "tensor_board_log_dir": tensor_board_log_dir,
         "predict_model_path": predict_model_path,
         "forecast_path": forecast_path,
-        "runtime_oppath": runtime_oppath,
+        "total_runtime_oppath": total_runtime_oppath,
+        "par_runtime_oppath": par_runtime_oppath,
         "mlflow_dir ": mlflow_dir ,
         "git_root": git_root,
         "base_path": base_path

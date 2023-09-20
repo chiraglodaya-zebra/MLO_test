@@ -1,0 +1,19 @@
+creation_did:
+  47
+custom:
+  email: chirag.lodaya@zebra.com
+  exp_title: Exp_4
+learning_rate:
+  0.01
+
+
+hydra:
+    mode: MULTIRUN
+    sweep:
+      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/multirun/${now:%Y-%m-%d}/${custom.exp_title}
+      subdir: ${hydra.job.override_dirname}
+    sweeper:
+        params:
+          +prev_sweep: +operand1=add,+operand1=sub
+          +batch_size: 64,128
+          
