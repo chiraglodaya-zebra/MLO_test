@@ -1,0 +1,8 @@
+batch_size:
+  64
+creation_did: 
+  47
+hydra:
+    sweep:
+      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/chirag.lodaya@zebra.com/multirun
+      subdir: ${now:%Y-%m-%d}/Exp_1/T1/Output

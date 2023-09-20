@@ -16,16 +16,16 @@ import datetime as dt
 import mlflow
 
 
-run_type = 'def'
+run_type = 'Def'
 
 @hydra.main(version_base=None, config_path=f"{run_type}/conf", config_name="config")
 def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
-    creation_did = cfg.creation_did
-    batch_size = cfg.batch_size
+    operand1 = cfg.operand1
+    operand2 = cfg.operand2
 
-    print(creation_did)
-    print(batch_size)
+    print(operand1)
+    print(operand2)
 
 
     mlflow_dir = "/Users/chirag.lodaya@zebra.com/experiment_ann_1"
@@ -36,10 +36,10 @@ def my_app(cfg : DictConfig) -> None:
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
     
 
-    fe_model_output = f'{runtime_oppath}/fe_model_output.parquet'
-    model_data_path = f'{runtime_oppath}/'
-    dataset_path = f'{runtime_oppath}/'
-    predict_input_path = f'{runtime_oppath}/fe/prediction.parquet'
+    fe_model_output = f'{runtime_oppath}/fe/fe_model_output.parquet'
+    model_data_path = f'{runtime_oppath}/fe/'
+    # dataset_path = f'{runtime_oppath}/fe/'
+    # predict_input_path = f'{runtime_oppath}/fe/prediction.parquet'
 
 
     input_df_path = f'{base_path}/ML_Ops_Exp/Input/ANN_Input.parquet'
@@ -61,10 +61,10 @@ def my_app(cfg : DictConfig) -> None:
         "input_df_path":input_df_path,
         "fe_model_output": fe_model_output,
         "model_data_path": model_data_path,
-        "dataset_path": dataset_path,
-        "predict_input_path": predict_input_path,
-        "batch_size":batch_size, 
-        "creation_did" : creation_did,
+        # "dataset_path": dataset_path,
+        # "predict_input_path": predict_input_path,
+        "operand1":operand1, 
+        "operand2" : operand2,
         "runtime_oppath": runtime_oppath,
         "mlflow_dir ": mlflow_dir ,
         "git_root": git_root,
@@ -83,15 +83,15 @@ def my_app(cfg : DictConfig) -> None:
         print('===============')
         print('except block')
 
-    with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
-        mlflow.log_params(cfg)
-        mlflow.log_param("Output_Parquet_Path",forecast_path)
-        mlflow.end_run()
+    # with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
+    #     mlflow.log_params(cfg)
+    #     mlflow.log_param("Output_Parquet_Path",forecast_path)
+    #     mlflow.end_run()
 
     torun_jsons = ['T1']
     for temp_json in torun_jsons:
         t0 = time.time()
-        json_name = f"{git_root}/ANN_Testing/{temp_json}.json"
+        json_name = f"{git_root}/ANN_V1/{temp_json}.json"
 
         if True:
             # print format_params
