@@ -18,7 +18,7 @@ import mlflow
 
 run_type = 'Def'
 
-@hydra.main(version_base=None, config_path=f"{run_type}/conf", config_name="config")
+@hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name="config")
 def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
     operand1 = cfg.operand1
