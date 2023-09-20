@@ -27,6 +27,15 @@ prev_dir = 'T1/Output/fe'
 @hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name=config_name)
 def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
+
+
+    prev_sweep = cfg.prev_sweep 
+    prev_sweep = prev_sweep.replace("_","=")
+    batch_size = cfg.batch_size
+    learning_rate = cfg.learning_rate
+    creation_did = cfg.creation_did
+
+
     if run_type=='Def':
         prior_op = prev_dir
         total_runtime_oppath = HydraConfig.get().runtime.output_dir
@@ -34,16 +43,13 @@ def my_app(cfg : DictConfig) -> None:
         par_runtime_oppath = total_runtime_oppath
 
     else:
-        prior_op = f'{cfg.prev_sweep}/{prev_dir}'
+        prior_op = f'{prev_sweep}/{prev_dir}'
         total_runtime_oppath = HydraConfig.get().runtime.output_dir
         total_runtime_oppath = total_runtime_oppath.replace("/dbfs","dbfs:")
         par_runtime_oppath = HydraConfig.get().sweep.dir
         par_runtime_oppath = par_runtime_oppath.replace("/dbfs","dbfs:")
     
-    batch_size = cfg.batch_size
-    learning_rate = cfg.learning_rate
-    creation_did = cfg.creation_did
-
+    
     print(batch_size)
     print(learning_rate)
     print(prior_op)

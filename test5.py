@@ -29,11 +29,11 @@ from omegaconf import DictConfig, OmegaConf
 
 # config_path = Path().cwd().joinpath("conf")
 
-@hydra.main(version_base= None, config_path="conf", config_name="test_config")
+@hydra.main(version_base= None, config_path="conf", config_name="config_test2")
 def main(cfg : DictConfig) -> None:
     print(cfg)
-    runtime_oppath = HydraConfig.get().runtime.output_dir
-    print(runtime_oppath)
+    # runtime_oppath = HydraConfig.get().runtime.output_dir
+    # print(runtime_oppath)
 
 
 if __name__ == '__main__':
