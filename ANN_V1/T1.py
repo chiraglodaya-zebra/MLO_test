@@ -16,13 +16,12 @@ import datetime as dt
 import mlflow
 
 
-run_type = 'Def'
+run_type = 'Exp'
 task_name= 'T1'
+config_name = 'config_T1'
  
 
-
-
-@hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name="config")
+@hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name=config_name)
 def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
     operand1 = cfg.operand1
