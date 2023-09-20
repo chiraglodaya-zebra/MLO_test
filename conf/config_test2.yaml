@@ -20,4 +20,5 @@ hydra:
     sweeper:
         params:
           +n: 20,30
+          +prev_sweep: "+operand1_add" , "+operand1_sub"
     
