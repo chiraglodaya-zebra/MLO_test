@@ -27,7 +27,7 @@ from pathlib import Path
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
-config_path = Path().cwd().joinpath("conf")
+# config_path = Path().cwd().joinpath("conf")
 
 @hydra.main(version_base= None, config_path="conf", config_name="test_config")
 def main(cfg : DictConfig) -> None:
