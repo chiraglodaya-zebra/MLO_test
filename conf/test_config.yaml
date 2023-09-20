@@ -1,0 +1,11 @@
+operand1:
+  add
+operand2:
+  neg
+batch_size:
+  64
+creation_did: 
+  47
+hydra:
+    run:
+      dir: C:/Users/cl5495/Desktop/ML_Ops_Exp/MLO_test/Test_Dir/chirag.lodaya@zebra.com/singlerun/${now:%Y-%m-%d}/Exp_1/T1/Output 

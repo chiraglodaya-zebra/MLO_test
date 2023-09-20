@@ -23,6 +23,7 @@ def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
     operand1 = cfg.operand1
     operand2 = cfg.operand2
+    creation_did = cfg.creation_did
 
     print(operand1)
     print(operand2)
@@ -65,6 +66,7 @@ def my_app(cfg : DictConfig) -> None:
         # "predict_input_path": predict_input_path,
         "operand1":operand1, 
         "operand2" : operand2,
+        "creation_did": creation_did,
         "runtime_oppath": runtime_oppath,
         "mlflow_dir ": mlflow_dir ,
         "git_root": git_root,
@@ -72,16 +74,16 @@ def my_app(cfg : DictConfig) -> None:
             }
 
     #############################################################################################
-    try:
-        experiment_id = mlflow.create_experiment(mlflow_dir)
-        mlflow.set_experiment(mlflow_dir)
-        print('===============')
-        print('Try block')
-    except:
-        mlflow.set_experiment(mlflow_dir)
-        torun_jsons = ['model','predict']
-        print('===============')
-        print('except block')
+    # try:
+    #     experiment_id = mlflow.create_experiment(mlflow_dir)
+    #     mlflow.set_experiment(mlflow_dir)
+    #     print('===============')
+    #     print('Try block')
+    # except:
+    #     mlflow.set_experiment(mlflow_dir)
+    #     torun_jsons = ['model','predict']
+    #     print('===============')
+    #     print('except block')
 
     # with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
     #     mlflow.log_params(cfg)
