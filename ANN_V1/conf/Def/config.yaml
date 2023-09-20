@@ -4,7 +4,9 @@ operand2:
   neg
 batch_size:
   64
-creation_did: 
+learning_rate: 
+  0.01
+creation_did:
   47
 custom:
   email: chirag.lodaya@zebra.com

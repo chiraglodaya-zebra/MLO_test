@@ -1,0 +1,163 @@
+{
+	"DFP": {
+		"stages": [
+			{
+				"module_class": "antuit.dfp.ann_model.AnnDcmFrcs",
+				"params": {
+					"mode": "single-gpu",
+					"verbose": 2,
+					"model_path": "{model_path}",
+					"dataset_path": "{dataset_path}",
+					"tfb_log_dir": "{tensor_board_log_dir}",
+					"validation_set": "in_sample",
+					"training_set_subsample_ratio": 1,
+					"validation_set_subsample_ratio": 1,
+					"tfb_update_freq": 1000,
+					"use_lr_finder_weights":false,
+					"model_fitting_params": {
+						"n_epoch": 30,
+						"learning_rate": "{learning_rate}",
+						"lr_decay_rate": 0.85					
+						
+					},
+
+					"model_dict": {
+						"history_size": 5,
+						"forecast_horizon": 4,
+						"batch_size": "{batch_size}",
+						"loss_function": "mae",
+						"driver_modeling": "multiplicative",
+						"attr_dict": {
+							"prod_attrs": {
+
+								"12nc_cat": {
+									"categorical": true,
+									"embSize": 30
+								},
+								"Business_Unit_Desc_cat": {
+									"categorical": true,
+									"embSize": 2
+								},
+								"MAG_Desc_cat":{
+									"categorical": true,
+									"embSize": 11
+								},
+								"AG_Desc_cat":{
+									"categorical": true,
+									"embSize": 20
+								},
+								"BG_Desc_cat":{
+									"categorical": true,
+									"embSize": 2
+								}
+								
+
+							},
+							"loc_attrs": {
+	
+								
+
+							},
+							"date_attrs": {
+								
+								
+							},
+							"observations": {
+								"suffix_lags": "_leads",
+								"Lag5_Sales_nm_leads": {"categorical": false},
+								"Lag6_Sales_nm_leads": {"categorical": false},
+								"Lag7_Sales_nm_leads": {"categorical": false},
+								"Lag8_Sales_nm_leads": {"categorical": false},
+								"Lag9_Sales_nm_leads": {"categorical": false},
+								"Lag10_Sales_nm_leads": {"categorical": false},
+								"Lag11_Sales_nm_leads": {"categorical": false},
+								"Lag12_Sales_nm_leads": {"categorical": false},
+								"SO_nm_leads":{"categorical":false},
+								"month_cat_leads": {"categorical": true, "embSize": 6},
+								"Average_Discount_Percent_nm_leads":{"categorical":false},
+								"Prime_flag_cat_leads": {"categorical": true,"embSize": 2},
+								"feature_type_cat_leads": {"categorical": true, "embSize": 2}
+							},
+							"drivers": {
+								"promotion": {															
+								}
+
+							},
+							"actuals": {
+								"ATD_V2_nm_leads": {
+									"categorical": false
+								}
+							}
+						},
+						"architecture": {
+							"attributes": {
+								"layers": [
+									{
+										"kwargs": {
+											"activation": "tanh",
+											"use_bias": true
+										},
+										"regularization": {
+											"activity_regularizer_l2": 1e-05
+										}
+									}
+								]
+							},
+							"rnn": {
+								"variant": "gru",
+								"layers": [
+									{
+										"kwargs": {
+											"units": 128,
+											"dropout": 2.0e-3,
+											"activation": "tanh"
+										},
+										"regularization": {
+											"kernel_regularizer_l2": 2.0e-05
+										}
+									}
+								]
+							},
+							"base_demand": {
+								"layers": [
+
+									{
+										"kwargs": {
+											"units":64,
+											"activation": "relu",
+											"use_bias": true
+										},
+										"regularization": {
+											"kernel_regularizer_l2": 1.0e-04,
+											"bias_regularizer_l2": 1.0e-04
+										}
+									},
+									{
+										"kwargs": {
+											"activation": "relu",
+											"use_bias": true
+										},
+										"regularization": {
+											"kernel_regularizer_l2": 1.0e-04,
+											"bias_regularizer_l2": 1.0e-04
+										}
+									}
+								]
+							},
+					"drivers": {
+								
+					}
+						
+
+
+					}
+				}
+			
+			}	
+		 }
+	
+	]
+	
+  }
+
+}

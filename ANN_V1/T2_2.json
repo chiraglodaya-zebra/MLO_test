@@ -1,0 +1,52 @@
+{
+	"DFP": {
+		"stages": [
+			{
+				"module_class": "antuit.dfp.io.LoadingSparkDataframe",
+				"params": {
+					"input_name": "{predict_input_path}",
+					"file_type": "parquet",
+					"load_attrDict": true
+				}
+			},
+			{
+				"module_class": "antuit.dfp.ann_model.ModelAnnDcmFrcsModel",
+				"params": {
+					"mode" : "multi-cpu",
+					"output_col" : "frcs_leads",
+					"model_path": "{predict_model_path}",
+					"partition_cols" : ["12nc"]
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.arrayMelting",
+				"params": {
+					"partition_cols" : ["12nc","d_id"],
+					"input_array_cols" : ["frcs_leads"],
+					"output_cols" : ["frcs"],
+					"date_col" : "d_id",
+					"new_date_col_name" : "forecast_cr_d_id",
+					"lead_col" : "lead",
+					"forecastHorizon" : 4,
+					"dropArrayCols" : true
+				}
+			},
+			{
+				"module_class": "antuit.dfp.fe.FeatureDeNormTransform",
+				"params": {
+					"input_cols": ["frcs"],
+					"output_postfix": "_dnm",
+					"og_col_name": ["ATD_V2"]
+				}
+			},
+			{
+				"module_class": "antuit.dfp.io.StoringSparkDataframe",
+				"params": {
+					"output_name" : "{forecast_path}",
+					"file_type" : "parquet",
+					"mode" : "overwrite"
+				}
+			}
+		]
+	}
+}
