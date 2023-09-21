@@ -37,7 +37,7 @@ def my_app(cfg : DictConfig) -> None:
     creation_did = cfg.creation_did
 
     today = date.today().strftime("%Y-%m-%d")
-    exp_logging = f"{today}_{cfg.exp_title}"
+    exp_logging = f"{today}_{cfg.custom.exp_title}"
 
 
     total_runtime_oppath = HydraConfig.get().runtime.output_dir
