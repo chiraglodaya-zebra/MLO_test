@@ -10,8 +10,8 @@ creation_did:
   47
 custom:
   email: chirag.lodaya@zebra.com
-  exp_title: Exp_3
+  exp_title: Exp_1
 
 hydra:
     run:
-      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/singlerun/${now:%Y-%m-%d}/${custom.exp_title}
+      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/${now:%Y-%m-%d}/${custom.exp_title}

@@ -14,11 +14,13 @@ import json
 import sys
 import datetime as dt
 import mlflow
+from datetime import date
 
 
-run_type = 'Exp'
+run_type = 'Def'
 task_name= 'T1'
-config_name = 'config_T1'
+config_name = 'config'
+torun_jsons = ['T1']
  
 
 @hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name=config_name)
@@ -27,12 +29,14 @@ def my_app(cfg : DictConfig) -> None:
     operand1 = cfg.operand1
     operand2 = cfg.operand2
     creation_did = cfg.creation_did
+    today = date.today().strftime("%Y-%m-%d")
+    exp_logging = f"{today}_{cfg.exp_no}"
 
     print(operand1)
     print(operand2)
 
 
-    mlflow_dir = "/Users/chirag.lodaya@zebra.com/experiment_ann_1"
+    mlflow_dir = f"/Users/chirag.lodaya@zebra.com/{exp_logging}"
     base_path = "dbfs:/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw"
     git_root = '/Workspace/Repos/chirag.lodaya@zebra.com/MLO_test'
     
@@ -78,23 +82,21 @@ def my_app(cfg : DictConfig) -> None:
             }
 
     #############################################################################################
-    # try:
-    #     experiment_id = mlflow.create_experiment(mlflow_dir)
-    #     mlflow.set_experiment(mlflow_dir)
-    #     print('===============')
-    #     print('Try block')
-    # except:
-    #     mlflow.set_experiment(mlflow_dir)
-    #     torun_jsons = ['model','predict']
-    #     print('===============')
-    #     print('except block')
+    try:
+        experiment_id = mlflow.create_experiment(mlflow_dir)
+        mlflow.set_experiment(mlflow_dir)
+        print('===============')
+        print('Try block')
+    except:
+        mlflow.set_experiment(mlflow_dir)
+        print('===============')
+        print('except block')
 
-    # with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
-    #     mlflow.log_params(cfg)
-    #     mlflow.log_param("Output_Parquet_Path",forecast_path)
-    #     mlflow.end_run()
+    with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
+        mlflow.log_params(cfg)
+        mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
+        mlflow.end_run()
 
-    torun_jsons = ['T1']
     for temp_json in torun_jsons:
         t0 = time.time()
         json_name = f"{git_root}/ANN_V1/{temp_json}.json"
