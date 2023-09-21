@@ -131,10 +131,18 @@ def my_app(cfg : DictConfig) -> None:
         print('===============')
         print('except block')
 
-    with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
-        mlflow.log_params(cfg)
-        mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
-        mlflow.end_run()
+    if run_type == 'Exp':
+        with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
+            mlflow.log_params(cfg)
+            mlflow.log_param(f"Task_{task_name}_Model_Path",model_path)
+            mlflow.log_param(f"Task_{task_name}_Output_Path",forecast_path)
+            mlflow.end_run()
+    else:
+        with mlflow.start_run(run_name=str(0)):
+            mlflow.log_params(cfg)
+            mlflow.log_param(f"Task_{task_name}_Model_Path",model_path)
+            mlflow.log_param(f"Task_{task_name}_Output_Path",forecast_path)
+            mlflow.end_run()
 
     for temp_json in torun_jsons:
         t0 = time.time()
