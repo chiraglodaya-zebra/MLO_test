@@ -30,8 +30,7 @@ def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
 
 
-    prev_sweep = cfg.prev_sweep 
-    prev_sweep = prev_sweep.replace("_","=")
+    
     batch_size = cfg.batch_size
     learning_rate = cfg.learning_rate
     creation_did = cfg.creation_did
@@ -50,7 +49,8 @@ def my_app(cfg : DictConfig) -> None:
     else:
         par_runtime_oppath = HydraConfig.get().sweep.dir
         par_runtime_oppath = par_runtime_oppath.replace("/dbfs","dbfs:")
-
+        prev_sweep = cfg.prev_sweep 
+        prev_sweep = prev_sweep.replace("_","=")
         if prev_sweep == 'Def':
             prior_op = prev_dir
         else:
