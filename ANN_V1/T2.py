@@ -132,13 +132,15 @@ def my_app(cfg : DictConfig) -> None:
         print('except block')
 
     if run_type == 'Exp':
-        with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
+        run_name = f'{task_name}_'+str(HydraConfig.get().job.num)
+        with mlflow.start_run(run_name=run_name):
             mlflow.log_params(cfg)
             mlflow.log_param(f"Task_{task_name}_Model_Path",model_path)
             mlflow.log_param(f"Task_{task_name}_Output_Path",forecast_path)
             mlflow.end_run()
     else:
-        with mlflow.start_run(run_name=str(0)):
+        run_name = f'{task_name}'
+        with mlflow.start_run(run_name=run_name):
             mlflow.log_params(cfg)
             mlflow.log_param(f"Task_{task_name}_Model_Path",model_path)
             mlflow.log_param(f"Task_{task_name}_Output_Path",forecast_path)

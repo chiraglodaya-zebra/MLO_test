@@ -17,9 +17,9 @@ import mlflow
 from datetime import date
 
 
-run_type = 'Exp'
+run_type = 'Def'
 task_name= 'T1'
-config_name = 'config_T1'
+config_name = 'config'
 torun_jsons = ['T1']
  
 
@@ -93,12 +93,14 @@ def my_app(cfg : DictConfig) -> None:
         print('except block')
 
     if run_type == 'Exp':
-        with mlflow.start_run(run_name=str(HydraConfig.get().job.num)):
+        run_name = f'{task_name}_'+str(HydraConfig.get().job.num)
+        with mlflow.start_run(run_name=run_name):
             mlflow.log_params(cfg)
             mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
             mlflow.end_run()
     else:
-        with mlflow.start_run(run_name=str(0)):
+        run_name = f'{task_name}'
+        with mlflow.start_run(run_name=run_name):
             mlflow.log_params(cfg)
             mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
             mlflow.end_run()
