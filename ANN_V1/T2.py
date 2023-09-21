@@ -16,9 +16,9 @@ import datetime as dt
 import mlflow
 from datetime import date
 
-run_type = 'Def'
+run_type = 'Exp'
 task_name= 'T2'
-config_name = 'config'
+config_name = 'config_T2'
 prev_dir = 'T1/Output/fe'
 torun_jsons = ['T2_1','T2_2']
  
