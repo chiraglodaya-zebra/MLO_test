@@ -17,8 +17,8 @@ import mlflow
 from datetime import date
 
 
-run_type = 'Def'
-config_name = 'config'
+run_type = 'Exp'
+config_name = 'config_T1'
 torun_jsons = ['T1']
  
 
@@ -43,7 +43,7 @@ def my_app(cfg : DictConfig) -> None:
     creation_did = cfg.creation_did
 
     today = date.today().strftime("%Y-%m-%d")
-    exp_logging = f"{today}_{cfg.custom.exp_title}"
+    exp_logging = f"{run_type}_{today}_{cfg.custom.exp_title}"
 
     print(operand1)
     print(operand2)

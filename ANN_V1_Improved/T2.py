@@ -34,6 +34,7 @@ def my_app(cfg : DictConfig) -> None:
     total_runtime_oppath = HydraConfig.get().runtime.output_dir
     total_runtime_oppath = total_runtime_oppath.replace("/dbfs","dbfs:")
 
+    
 
     if run_type == 'Exp':
         task_name = cfg.custom.task_name
@@ -73,7 +74,7 @@ def my_app(cfg : DictConfig) -> None:
     creation_did = cfg.creation_did
 
     today = date.today().strftime("%Y-%m-%d")
-    exp_logging = f"{today}_{cfg.custom.exp_title}"
+    exp_logging = f"{run_type}_{today}_{cfg.custom.exp_title}"
 
 
 

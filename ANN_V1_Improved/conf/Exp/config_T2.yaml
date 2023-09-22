@@ -19,6 +19,6 @@ hydra:
       subdir: ${hydra.job.override_dirname}
     sweeper:
         params:
-          +prev_sweep: Def
+          +prev_sweep: +operand1_add, +operand1_sub
           +batch_size: 64,128
           
