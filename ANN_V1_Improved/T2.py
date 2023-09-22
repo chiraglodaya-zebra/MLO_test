@@ -51,7 +51,7 @@ def my_app(cfg : DictConfig) -> None:
         if prev_sweep == 'Def':
             prior_op = f'{cfg.prev_task}/{prev_dir}'
         else:
-            prior_op = f'{prev_sweep}/{cfg.prev_task}/{prev_dir}'
+            prior_op = f'{prev_sweep}/{prev_dir}'
 
 
 
@@ -64,7 +64,7 @@ def my_app(cfg : DictConfig) -> None:
         op_dir_predict = f"{task_name}/Output/predict"
 
         par_runtime_oppath = total_runtime_oppath
-        prior_op = prev_dir
+        prior_op = f'{cfg.prev_task}/{prev_dir}'
 
 
     
