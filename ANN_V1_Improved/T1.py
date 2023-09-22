@@ -18,7 +18,6 @@ from datetime import date
 
 
 run_type = 'Def'
-task_name= 'T1'
 config_name = 'config'
 torun_jsons = ['T1']
  
@@ -26,11 +25,24 @@ torun_jsons = ['T1']
 @hydra.main(version_base=None, config_path=f"conf/{run_type}", config_name=config_name)
 def my_app(cfg : DictConfig) -> None:
     ############# DFP specific block
+
+    # torun_jsons = cfg.torun_jsons
+
+    if run_type == 'Exp':
+        task_name = cfg.task_name
+        mlflow_run_name = f'{task_name}_'+str(HydraConfig.get().job.num)
+        op_dir = f"Output/fe"
+        
+    else:
+        task_name = cfg.task_name1
+        mlflow_run_name = f'{task_name}'
+        op_dir = f"{task_name}/Output/fe"
+
     operand1 = cfg.operand1
     operand2 = cfg.operand2
     creation_did = cfg.creation_did
+
     today = date.today().strftime("%Y-%m-%d")
-    
     exp_logging = f"{today}_{cfg.custom.exp_title}"
 
     print(operand1)
@@ -43,11 +55,11 @@ def my_app(cfg : DictConfig) -> None:
     
     runtime_oppath = HydraConfig.get().runtime.output_dir
     runtime_oppath = runtime_oppath.replace("/dbfs","dbfs:")
-    op_dir = f"{task_name}/Output"
+    
     
 
-    fe_model_output = f'{runtime_oppath}/{op_dir}/fe/fe_model_output.parquet'
-    model_data_path = f'{runtime_oppath}/{op_dir}/fe/'
+    fe_model_output = f'{runtime_oppath}/{op_dir}/fe_model_output.parquet'
+    model_data_path = f'{runtime_oppath}/{op_dir}/'
     # dataset_path = f'{runtime_oppath}/fe/'
     # predict_input_path = f'{runtime_oppath}/fe/prediction.parquet'
 
@@ -93,22 +105,16 @@ def my_app(cfg : DictConfig) -> None:
         print('===============')
         print('except block')
 
-    if run_type == 'Exp':
-        run_name = f'{task_name}_'+str(HydraConfig.get().job.num)
-        with mlflow.start_run(run_name=run_name):
-            mlflow.log_params(cfg)
-            mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
-            mlflow.end_run()
-    else:
-        run_name = f'{task_name}'
-        with mlflow.start_run(run_name=run_name):
-            mlflow.log_params(cfg)
-            mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
-            mlflow.end_run()
+   
+    with mlflow.start_run(run_name=mlflow_run_name):
+        mlflow.log_params(cfg)
+        mlflow.log_param(f"Task_{task_name}_Output_Path",model_data_path)
+        mlflow.end_run()
+    
 
     for temp_json in torun_jsons:
         t0 = time.time()
-        json_name = f"{git_root}/ANN_V1/{temp_json}.json"
+        json_name = f"{git_root}/ANN_V1_Improved/{temp_json}.json"
 
         if True:
             # print format_params

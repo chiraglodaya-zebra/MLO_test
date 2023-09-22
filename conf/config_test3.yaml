@@ -1,0 +1,13 @@
+experiment_name:
+  "10-08-2023_t2"
+
+torun_jsons:
+  [T1,T2]
+
+optimiser:
+    lr: 1e-3
+    scheduler: exponential_lr
+    iter: 5000
+    
+
+    

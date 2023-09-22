@@ -1,11 +1,8 @@
 experiment_name:
   "10-08-2023_t2"
 
-network:
-    inputs: 2
-    outputs: 3
-    layer_size: 60
-    nr_layers: 8
+torun_jsons:
+  T1,T2
 
 optimiser:
     lr: 1e-3
@@ -20,5 +17,5 @@ hydra:
     sweeper:
         params:
           +n: 20,30
-          +prev_sweep: "+operand1_add" , "+operand1_sub"
+          +prev_sweep: +operand1_add,+operand1_sub
     

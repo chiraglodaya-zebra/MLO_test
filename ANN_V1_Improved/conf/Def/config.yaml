@@ -1,0 +1,19 @@
+operand1:
+  add
+operand2:
+  neg
+batch_size:
+  64
+learning_rate: 
+  0.01
+creation_did:
+  47
+custom:
+  email: chirag.lodaya@zebra.com
+  exp_title: Exp_1
+  task_name1: T1
+  task_name2: T2
+
+hydra:
+    run:
+      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/${now:%Y-%m-%d}/${custom.exp_title}

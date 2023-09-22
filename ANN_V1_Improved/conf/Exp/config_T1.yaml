@@ -1,0 +1,21 @@
+operand2:
+  neg
+creation_did:
+  47
+custom:
+  email: chirag.lodaya@zebra.com
+  exp_title: Exp_3
+  task_name: T1
+
+torun_jsons:
+  [T1]
+
+hydra:
+    mode: MULTIRUN
+    sweep:
+      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/${now:%Y-%m-%d}/${custom.exp_title}/${custom.task_name}
+      subdir: ${hydra.job.override_dirname}
+    sweeper:
+        params:
+          +operand1: add,sub
+  

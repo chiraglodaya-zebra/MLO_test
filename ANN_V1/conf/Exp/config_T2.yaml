@@ -16,4 +16,3 @@ hydra:
         params:
           +prev_sweep: Def
           +batch_size: 64,128
-          
