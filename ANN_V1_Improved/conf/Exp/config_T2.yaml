@@ -6,7 +6,8 @@ custom:
   task_name: T2
 learning_rate:
   0.01
-  
+prev_task:
+  T1
 torun_jsons:
   [T2_1,T2_2]
 
