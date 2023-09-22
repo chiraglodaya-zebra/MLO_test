@@ -52,7 +52,7 @@ def my_app(cfg : DictConfig) -> None:
         if prev_sweep == 'Def':
             prior_op = f'{cfg.prev_task}/{prev_dir}'
         else:
-            prior_op = f'{prev_sweep}/{prev_dir}'
+            prior_op = f'{cfg.prev_task}/{prev_sweep}/{prev_dir}'
 
 
 

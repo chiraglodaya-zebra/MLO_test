@@ -13,8 +13,8 @@ torun_jsons:
 hydra:
     mode: MULTIRUN
     sweep:
-      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/${now:%Y-%m-%d}/${custom.exp_title}/${custom.task_name}
-      subdir: ${hydra.job.override_dirname}
+      dir: /dbfs/mnt/qa1datamartstdsandbox/qa1datamartstdsandbox-ds-store-std-sandbox-rw/ML_Ops_Exp/${custom.email}/${now:%Y-%m-%d}/${custom.exp_title}
+      subdir: ${custom.task_name}/${hydra.job.override_dirname}
     sweeper:
         params:
           +operand1: add,sub
