@@ -36,7 +36,7 @@ def my_app(cfg : DictConfig) -> None:
 
 
     if run_type == 'Exp':
-        task_name = cfg.task_name
+        task_name = cfg.custom.task_name
         mlflow_run_name = f'{task_name}_'+str(HydraConfig.get().job.num)
 
         op_dir_model = f"Output/model"
@@ -56,7 +56,7 @@ def my_app(cfg : DictConfig) -> None:
 
 
     else:
-        task_name = cfg.task_name2
+        task_name = cfg.custom.task_name2
         mlflow_run_name = f'{task_name}'
         # op_dir = f"{task_name}/Output/fe"
 
