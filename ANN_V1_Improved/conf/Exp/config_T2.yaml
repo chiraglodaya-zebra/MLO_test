@@ -2,7 +2,7 @@ creation_did:
   47
 custom:
   email: chirag.lodaya@zebra.com
-  exp_title: Exp_2
+  exp_title: Exp_3
   task_name: T2
 learning_rate:
   0.01
@@ -19,6 +19,6 @@ hydra:
       subdir: ${custom.task_name}/${hydra.job.override_dirname}
     sweeper:
         params:
-          +prev_sweep: +operand1_add, +operand1_sub
+          +prev_sweep: Def
           +batch_size: 64,128
           
