@@ -17,8 +17,8 @@ import mlflow
 from datetime import date
 
 
-run_type = 'Exp'
-config_name = 'config_T1'
+run_type = 'Def'
+config_name = 'config'
 torun_jsons = ['T1']
  
 
